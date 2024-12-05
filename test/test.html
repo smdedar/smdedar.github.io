@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascal Michaillat - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <main class="container mx-auto px-4 py-12 flex flex-col items-center text-center max-w-3xl">
+        <div class="relative w-48 h-48 md:w-56 md:h-56 mb-8">
+            <img src="https://pascalmichaillat.org/picture.jpeg" alt="Profile picture" class="rounded-full object-cover w-full h-full">
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">Pascal Michaillat</h1>
+        
+        <p class="text-lg text-gray-600 mb-8 max-w-2xl">
+            I am an Associate Professor of Economics at the University of California, Santa Cruz. I research why economic slack—especially unemployment—exists, why it fluctuates over the business cycle, and how macroeconomic policies should respond to such fluctuations.
+        </p>
+
+        <!-- Social Links -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <a href="https://pascalmichaillat.org/cv.pdf" class="text-gray-600 hover:text-black transition-colors">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
+                <span class="sr-only">CV</span>
+            </a>
+            <a href="mailto:test@gmail.com" class="text-gray-600 hover:text-black transition-colors">
+                <i data-lucide="mail" class="w-6 h-6"></i>
+                <span class="sr-only">Email</span>
+            </a>
+            <a href="https://www.linkedin.com/in/pascalmichaillat/" class="text-gray-600 hover:text-black transition-colors">
+                <i data-lucide="linkedin" class="w-6 h-6"></i>
+                <span class="sr-only">LinkedIn</span>
+            </a>
+            <a href="https://github.com/pmichaillat" class="text-gray-600 hover:text-black transition-colors">
+                <i data-lucide="github" class="w-6 h-6"></i>
+                <span class="sr-only">GitHub</span>
+            </a>
+            <a href="https://scholar.google.com/citations?user=ABCDEFGHIJKLMNO" class="text-gray-600 hover:text-black transition-colors">
+                <i data-lucide="book-open" class="w-6 h-6"></i>
+                <span class="sr-only">Google Scholar</span>
+            </a>
+        </div>
+
+        <!-- Navigation Tags -->
+        <div class="flex flex-wrap justify-center gap-2">
+            <a href="#" class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
+                Papers
+            </a>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
+                Courses
+            </a>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
+                Design
+            </a>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
+                Tags
+            </a>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
+                Archive
+            </a>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
