@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    pre, code {
+      background: #f4f4f4;
+      padding: 10px;
+      display: block;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Paper</h1>
+<div id="content">
+  Loading...
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get the query parameters from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const contentParam = urlParams.get("content");
+
+    if (contentParam) {
+      // Construct the Markdown file name
+      const markdownFileName = `${contentParam}.md`;
+
+      // Fetch the corresponding Markdown file
+      fetch(markdownFileName)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then((markdown) => {
+          // Convert Markdown to HTML using marked.js
+          const htmlContent = marked.parse(markdown);
+
+          // Display the rendered content inside the #content div
+          document.getElementById("content").innerHTML = htmlContent;
+        })
+        .catch((error) => {
+          document.getElementById("content").innerHTML = "Error loading content.";
+          console.error("Error fetching Markdown file:", error);
+        });
+    } else {
+      document.getElementById("content").innerHTML = "No content specified in the URL.";
+    }
+  });
+</script>
+
+</body>
+</html>

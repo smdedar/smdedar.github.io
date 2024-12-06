@@ -1,99 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-      }
-    </style>
-  </head>
-  <body class="bg-white min-h-screen">
-    <main
-      class="container mx-auto px-4 py-12 flex flex-col items-center text-center max-w-3xl"
-    >
-      <div class="relative w-42 h-42 md:w-40 md:h-40 mb-8">
-        <img
-          id="profile-img"
-          alt="Profile picture"
-          class="rounded-full object-cover w-full h-full"
-        />
-      </div>
 
-      <h1 id="name" class="text-3xl md:text-4xl font-bold mb-4"></h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    }
+  </style>
+</head>
 
-      <p
-        id="description"
-        class="text-base md:text-lg text-gray-600 mb-6 max-w-2xl"
-      ></p>
+<body class="bg-white min-h-screen">
+  <main class="container mx-auto px-4 py-12 flex flex-col items-center text-center max-w-3xl">
+    <div class="relative w-36 h-36 md:w-40 md:h-40 mb-4">
+      <img id="profile-img" alt="Profile picture" class="rounded-full object-cover w-full h-full" />
+    </div>
 
-      <!-- Social Links -->
-      <div id="social-links" class="flex flex-wrap justify-center gap-4 mb-8">
-        <!-- Social links will be dynamically inserted here -->
-      </div>
+    <h1 id="name" class="text-3xl md:text-4xl font-bold mb-4"></h1>
 
-      <!-- Navigation Tags -->
-      <div id="navigation-tags" class="flex flex-wrap justify-center gap-2">
-        <!-- Navigation tags will be dynamically inserted here -->
-      </div>
-    </main>
+    <p id="description" class="text-base md:text-lg text-gray-600 mb-6 max-w-2xl"></p>
 
-    <script src="config.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Set profile image
-        document.getElementById("profile-img").src = portfolioData.profile_img;
-        document.title = portfolioData.name;
-        // Set name
-        document.getElementById("name").textContent = portfolioData.name;
+    <!-- Social Links -->
+    <div id="social-links" class="flex flex-wrap justify-center gap-4 mb-8">
+      <!-- Social links will be dynamically inserted here -->
+    </div>
 
-        // Set description
-        document.getElementById("description").textContent =
-          portfolioData.description;
+    <!-- Navigation Tags -->
+    <div id="navigation-tags" class="flex flex-wrap justify-center gap-2">
+      <!-- Navigation tags will be dynamically inserted here -->
+    </div>
+  </main>
+  <script src="js/about.js"></script>
+  <script src="js/config.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Set profile image
+      document.getElementById("profile-img").src = about.image;
+      document.title = about.name;
+      // Set name
+      document.getElementById("name").textContent = about.name;
 
-        // Set social links
-        const socialLinksContainer = document.getElementById("social-links");
-        const socialLinks = [
-          { key: "cv", icon: "file-text", label: "CV" },
-          { key: "email", icon: "mail", label: "Email" },
-          { key: "linkedin", icon: "linkedin", label: "LinkedIn" },
-          { key: "github", icon: "github", label: "GitHub" },
-          { key: "google_scholar", icon: "book-open", label: "Google Scholar" },
-        ];
+      // Set description
+      document.getElementById("description").textContent =
+        about.description;
 
-        socialLinks.forEach((link) => {
-          if (portfolioData[link.key]) {
-            const a = document.createElement("a");
-            a.href = portfolioData[link.key];
-            a.className = "text-gray-600 hover:text-black transition-colors";
-            a.innerHTML = `
+      // Set social links
+      const socialNavigationContainer = document.getElementById("social-links");
+
+      // console.log(socialNavigation)
+      // console.log(about)
+      // console.log(tagNavigation)
+      socials.forEach((link) => {
+        if (about[link.key]) {
+          const a = document.createElement("a");
+          a.href = about[link.key];
+          a.className = "text-gray-600 hover:text-black transition-colors";
+          a.innerHTML = `
                         <i data-lucide="${link.icon}" class="w-6 h-6"></i>
                         <span class="sr-only">${link.label}</span>
                     `;
-            socialLinksContainer.appendChild(a);
-          }
-        });
-
-        // Set navigation tags
-        const navigationTagsContainer =
-          document.getElementById("navigation-tags");
-        portfolioData.navigation_tags.forEach((tag) => {
-          const a = document.createElement("a");
-          a.href = "#";
-          a.className =
-            "inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors";
-          a.textContent = tag;
-          navigationTagsContainer.appendChild(a);
-        });
-
-        // Initialize Lucide icons
-        lucide.createIcons();
+          socialNavigationContainer.appendChild(a);
+        }
       });
-    </script>
-  </body>
+
+      // Set navigation tags
+      const navigationTagsContainer =
+        document.getElementById("navigation-tags");
+      tags.forEach((tag) => {
+        const a = document.createElement("a");
+        a.href = `${tag.toLowerCase()}.html`;
+        a.className =
+          "inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors";
+        a.textContent = tag;
+        navigationTagsContainer.appendChild(a);
+      });
+
+      // Initialize Lucide icons
+      lucide.createIcons();
+    });
+  </script>
+</body>
+
 </html>

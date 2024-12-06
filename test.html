@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Papers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="border-b px-4 py-4 bg-white">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-purple-400 rounded"></div>
+                <span class="font-medium">Pascal Michaillat</span>
+            </div>
+            <div class="flex gap-6">
+                <a href="#" class="underline">Papers</a>
+                <a href="#">Courses</a>
+                <a href="#">Design</a>
+                <a href="#">Tags</a>
+                <a href="#">Archive</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto py-8 px-4">
+        <div id="papers-container" class="space-y-6">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <script>
+        const papers = [
+            {
+                id: 1,
+                title: "Beveridgean Phillips Curve",
+                description: "This paper builds a Beveridgean model of the Phillips curve. Prices respond to slack so the divine coincidence holds: prices are stable at full employment. The Phillips curve is kinked if wage cuts are more costly to producers than price hikes.",
+                date: "October 2024",
+                authors: "Pascal Michaillat, Emmanuel Saez"
+            },
+            {
+                id: 2,
+                title: "Modeling Migration-Induced Unemployment",
+                description: "This paper explains why a wave of in-migration reduces the employment rate of local workers, and why this reduction is larger in bad times. Yet, when the labor market is inefficiently tight, in-migration improves local welfare because it aids firms in recruiting.",
+                date: "October 2024",
+                authors: "Pascal Michaillat"
+            },
+            {
+                id: 3,
+                title: "u* = √uv: The Full-Employment Rate of Unemployment in the United States",
+                description: "This paper argues that in the United States the full-employment rate of unemployment (FERU) is the geometric average of the unemployment and vacancy rates. Between 1930 and 2024, the FERU averages 4.1% and is very stable.",
+                date: "September 2024",
+                authors: "Pascal Michaillat, Emmanuel Saez"
+            }
+        ];
+
+        function createPaperCard(paper) {
+            return `
+                <article 
+                    class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-all duration-300 ease-in-out cursor-pointer transform hover:-translate-y-1"
+                    onclick="openPaperDetails(${paper.id})"
+                >
+                    <h2 class="text-xl font-medium mb-4">${paper.title}</h2>
+                    <p class="text-gray-600 mb-4">${paper.description}</p>
+                    <div class="text-gray-500">
+                        ${paper.date} · ${paper.authors}
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderPapers() {
+            const container = document.getElementById('papers-container');
+            container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
+        }
+
+        function openPaperDetails(paperId) {
+            const paper = papers.find(p => p.id === paperId);
+            if (paper) {
+                // For now, we'll just show an alert. In a real application, you'd navigate to a details page.
+                alert(`Opening details for: ${paper.title}`);
+                // You could use window.location.href = `/paper/${paperId}` to navigate to a details page
+            }
+        }
+
+        // Initial render
+        renderPapers();
+    </script>
+</body>
+</html>
