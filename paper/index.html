@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,76 +16,104 @@
       padding: 20px;
       line-height: 1.6;
     }
-    h1, h2, h3 {
+
+    h1,
+    h2,
+    h3 {
       color: #333;
     }
-    pre, code {
+
+    pre,
+    code {
       background: #f4f4f4;
       padding: 10px;
       display: block;
       border-radius: 5px;
       overflow-x: auto;
     }
+
+    .error-message {
+      color: #e53e3e;
+      background-color: #fef2f2;
+      border: 1px solid #feb2b2;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
   </style>
 </head>
-<body class="bg-gray-50">
 
-<!-- Navigation -->
-<nav class="border-b px-4 py-4 bg-white">
-  <div class="max-w-6xl mx-auto flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <div class="w-6 h-6 bg-purple-400 rounded"></div>
-      <a href="/" class="font-medium">Pascal Michaillat</a>
+<body>
+
+  <!-- Navigation -->
+  <nav class="border-b px-4 py-4 bg-white">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-purple-400 rounded" aria-hidden="true"></div>
+        <a href="/" class="font-medium text-gray-800 hover:text-purple-500 transition-colors">Pascal Michaillat</a>
+      </div>
+      <div class="flex gap-6 text-gray-600">
+        <a href="/papers.html" class="underline text-purple-500">Papers</a>
+        <a href="#" class="hover:text-purple-500 transition-colors">Courses</a>
+        <a href="#" class="hover:text-purple-500 transition-colors">Design</a>
+        <a href="#" class="hover:text-purple-500 transition-colors">Tags</a>
+        <a href="#" class="hover:text-purple-500 transition-colors">Archive</a>
+      </div>
     </div>
-    <div class="flex gap-6">
-      <a href="/papers.html" class="underline">Papers</a>
-      <a href="#">Courses</a>
-      <a href="#">Design</a>
-      <a href="#">Tags</a>
-      <a href="#">Archive</a>
-    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div id="content" class="p-4 bg-white rounded-lg shadow">
+    Loading...
   </div>
-</nav>
 
-<!-- Main Content -->
-<div id="content" class="p-4 bg-white rounded-lg shadow">
-  Loading...
-</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const contentDiv = document.getElementById("content");
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the query parameters from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const contentParam = urlParams.get("content");
+      // Get the query parameters from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const contentParam = urlParams.get("content");
 
-    if (contentParam) {
-      // Construct the Markdown file name
-      const markdownFileName = `${contentParam}.md`;
+      if (contentParam) {
+        // Construct the Markdown file name
+        const markdownFileName = `${contentParam}.md`;
 
-      // Fetch the corresponding Markdown file
-      fetch(markdownFileName)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.text();
-        })
-        .then((markdown) => {
-          // Convert Markdown to HTML using marked.js
-          const htmlContent = marked.parse(markdown);
+        // Fetch the corresponding Markdown file
+        fetch(markdownFileName)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+          })
+          .then((markdown) => {
+            // Convert Markdown to HTML using marked.js
+            const htmlContent = marked.parse(markdown);
 
-          // Display the rendered content inside the #content div
-          document.getElementById("content").innerHTML = htmlContent;
-        })
-        .catch((error) => {
-          document.getElementById("content").innerHTML = "Error loading content.";
-          console.error("Error fetching Markdown file:", error);
-        });
-    } else {
-      document.getElementById("content").innerHTML = "No content specified in the URL.";
-    }
-  });
-</script>
+            // Display the rendered content inside the #content div
+            contentDiv.innerHTML = htmlContent;
+          })
+          .catch((error) => {
+            // Display an error message in case of failure
+            contentDiv.innerHTML = `
+            <div class="error-message">
+              Unable to load content. Please try again later or check the file name.
+            </div>
+          `;
+            console.error("Error fetching Markdown file:", error);
+          });
+      } else {
+        // Display a message if no content parameter is provided
+        contentDiv.innerHTML = `
+        <div class="error-message">
+          No content specified in the URL. Please provide a valid file name.
+        </div>
+      `;
+      }
+    });
+  </script>
 
 </body>
+
 </html>
