@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academic Papers</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -13,15 +18,16 @@
     <nav class="border-b px-4 py-4 bg-white">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <div class="w-6 h-6 bg-purple-400 rounded"></div>
-                <a href="/" class="font-medium">Pascal Michaillat</a>
+                <div class="w-6 h-6 bg-purple-400 rounded" aria-hidden="true"></div>
+                <a href="/" class="font-medium text-gray-800 hover:text-purple-500 transition-colors">Dedar
+                    Alam</a>
             </div>
-            <div class="flex gap-6">
-                <a href="#" class="underline">Papers</a>
-                <a href="#">Courses</a>
-                <a href="#">Design</a>
-                <a href="#">Tags</a>
-                <a href="#">Archive</a>
+            <div class="flex gap-6 text-gray-600">
+                <a href="#" class="underline text-purple-500">Papers</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Courses</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Design</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Tags</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Archive</a>
             </div>
         </div>
     </nav>
@@ -32,11 +38,20 @@
             <!-- Cards will be dynamically inserted here -->
         </div>
     </main>
+
     <script src="js/papers.js"></script>
     <script>
+        // Improved function to create a paper card
         function createPaperCard(paper) {
             return `
-                <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer" onclick="openPaperDetails('${paper.url}')">
+                <article 
+                    class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer" 
+                    onclick="openPaperDetails('${paper.url}')"
+                    role="button"
+                    tabindex="0"
+                    aria-label="View details of ${paper.title}"
+                    onkeypress="handleKeyPress(event, '${paper.url}')"
+                >
                     <h2 class="text-xl font-medium mb-4">${paper.title}</h2>
                     <p class="text-gray-600 mb-4">${paper.description}</p>
                     <div class="text-gray-500">
@@ -46,17 +61,38 @@
             `;
         }
 
+        // Render paper cards
         function renderPapers() {
             const container = document.getElementById('papers-container');
+            if (!papers || papers.length === 0) {
+                container.innerHTML = `
+                    <p class="text-gray-500 text-center">No papers available at the moment.</p>
+                `;
+                return;
+            }
             container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
         }
 
+        // Handle opening paper details
         function openPaperDetails(url) {
-            window.location.href = url;
+            if (url) {
+                window.location.href = url;
+            } else {
+                console.error('Paper URL is not provided.');
+            }
+        }
+
+        // Handle keyboard navigation for paper cards
+        function handleKeyPress(event, url) {
+            if (event.key === 'Enter') {
+                openPaperDetails(url);
+            }
         }
 
         // Initial render
-        renderPapers();
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPapers();
+        });
     </script>
 </body>
 
