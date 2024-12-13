@@ -39,31 +39,55 @@
   <script src="js/config.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      // Validate configuration data
+      if (!about || typeof about !== "object") {
+        console.error("Missing or invalid 'about' configuration.");
+        return;
+      }
+      if (!Array.isArray(socials)) {
+        console.error("Missing or invalid 'socials' configuration.");
+        return;
+      }
+      if (!Array.isArray(tags)) {
+        console.error("Missing or invalid 'tags' configuration.");
+        return;
+      }
+
       // Set profile image
-      document.getElementById("profile-img").src = about.image;
-      document.title = about.name;
+      const profileImg = document.getElementById("profile-img");
+      if (about.image) {
+        profileImg.src = about.image;
+        profileImg.alt = `Profile picture of ${about.name}`;
+      } else {
+        console.warn("Profile image is missing in 'about'.");
+        profileImg.alt = "Default profile picture";
+      }
+
+      // Set document title
+      document.title = about.name || "About Me";
+
       // Set name
-      document.getElementById("name").textContent = about.name;
+      const nameElement = document.getElementById("name");
+      nameElement.textContent = about.name || "Unknown Name";
 
       // Set description
-      document.getElementById("description").textContent =
-        about.description;
+      const descriptionElement = document.getElementById("description");
+      descriptionElement.textContent =
+        about.description || "No description provided.";
 
       // Set social links
       const socialNavigationContainer = document.getElementById("social-links");
-
-      // console.log(socialNavigation)
-      // console.log(about)
-      // console.log(tagNavigation)
       socials.forEach((link) => {
         if (about[link.key]) {
           const a = document.createElement("a");
           a.href = about[link.key];
           a.className = "text-gray-600 hover:text-black transition-colors";
+          a.target = "_blank";
+          a.rel = "noopener noreferrer"; // Security best practice
           a.innerHTML = `
-                        <i data-lucide="${link.icon}" class="w-6 h-6"></i>
-                        <span class="sr-only">${link.label}</span>
-                    `;
+            <i data-lucide="${link.icon}" class="w-6 h-6"></i>
+            <span class="sr-only">${link.label}</span>
+          `;
           socialNavigationContainer.appendChild(a);
         }
       });
