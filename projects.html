@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="border-b px-4 py-4 bg-white">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-purple-400 rounded" aria-hidden="true"></div>
+                <a href="/" class="font-medium text-gray-800 hover:text-purple-500 transition-colors">Dedar
+                    Alam</a>
+            </div>
+            <div class="flex gap-6 text-gray-600">
+                <a href="/papers.html" class="hover:text-purple-500 transition-colors">Papers</a>
+                <a href="/projects.html" class="underline text-purple-500">Projects</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Courses</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Design</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Tags</a>
+                <a href="#" class="hover:text-purple-500 transition-colors">Archive</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto py-8 px-4">
+        <div id="projects-container" class="space-y-6">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <script src="js/projects.js"></script>
+    <script>
+        // Improved function to create a project card
+        function createProjectCard(project) {
+            return `
+                <article 
+                    class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer" 
+                    onclick="openProjectDetails('${project.url}')"
+                    role="button"
+                    tabindex="0"
+                    aria-label="View details of ${project.title}"
+                    onkeypress="handleKeyPress(event, '${project.url}')"
+                >
+                    <h2 class="text-xl font-medium mb-4">${project.title}</h2>
+                    <p class="text-gray-600 mb-4">${project.description}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="text-gray-500">
+                            ${project.date} &middot; ${project.authors}
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="${project.url}" class="text-purple-500 hover:text-purple-700 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Live Preview">
+                                🔗 Live Preview
+                            </a>
+                            <a href="${project.github || '#'}" class="text-purple-500 hover:text-purple-700 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
+                                📁 GitHub
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Render project cards
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            if (!projects || projects.length === 0) {
+                container.innerHTML = `
+                    <p class="text-gray-500 text-center">No projects available at the moment.</p>
+                `;
+                return;
+            }
+            container.innerHTML = projects.map(project => createProjectCard(project)).join('');
+        }
+
+        // Handle opening project details
+        function openProjectDetails(url) {
+            if (url) {
+                window.location.href = url;
+            } else {
+                console.error('Project URL is not provided.');
+            }
+        }
+
+        // Handle keyboard navigation for project cards
+        function handleKeyPress(event, url) {
+            if (event.key === 'Enter') {
+                openProjectDetails(url);
+            }
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+        });
+    </script>
+</body>
+
+</html>
