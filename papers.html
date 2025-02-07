@@ -22,12 +22,8 @@
                 <a href="/" class="font-medium text-gray-800 hover:text-purple-500 transition-colors">Dedar
                     Alam</a>
             </div>
-            <div class="flex gap-6 text-gray-600">
-                <a href="#" class="underline text-purple-500">Papers</a>
-                <a href="#" class="hover:text-purple-500 transition-colors">Courses</a>
-                <a href="#" class="hover:text-purple-500 transition-colors">Design</a>
-                <a href="#" class="hover:text-purple-500 transition-colors">Tags</a>
-                <a href="#" class="hover:text-purple-500 transition-colors">Archive</a>
+            <div id="navigation-links" class="flex gap-6 text-gray-600">
+                <!-- Navigation links will be dynamically inserted here -->
             </div>
         </div>
     </nav>
@@ -40,6 +36,7 @@
     </main>
 
     <script src="js/papers.js"></script>
+    <script src="js/config.js"></script>
     <script>
         // Improved function to create a paper card
         function createPaperCard(paper) {
@@ -89,9 +86,25 @@
             }
         }
 
+        // Function to generate navigation links
+        function renderNavigationLinks() {
+            const container = document.getElementById('navigation-links');
+            const currentPage = window.location.pathname.split('/').pop();
+
+            tags.forEach(tag => {
+                const link = document.createElement('a');
+                const href = `${tag.toLowerCase()}.html`;
+                link.href = href;
+                link.textContent = tag;
+                link.className = href === currentPage ? 'underline text-purple-500' : 'hover:text-purple-500 transition-colors';
+                container.appendChild(link);
+            });
+        }
+
         // Initial render
         document.addEventListener('DOMContentLoaded', () => {
             renderPapers();
+            renderNavigationLinks();
         });
     </script>
 </body>

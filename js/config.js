@@ -6,4 +6,4 @@ const socials = [
   { key: "google_scholar", icon: "book-open", label: "Google Scholar" },
 ];
 
-const tags = ["Papers", "Projects", "Blogs", "Tags", "Archive"]
+const tags = ["Papers", "Projects",]

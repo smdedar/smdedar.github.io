@@ -52,12 +52,8 @@
         <div class="w-6 h-6 bg-purple-400 rounded" aria-hidden="true"></div>
         <a href="/" class="font-medium text-gray-800 hover:text-purple-500 transition-colors">Pascal Michaillat</a>
       </div>
-      <div class="flex gap-6 text-gray-600">
-        <a href="/papers.html" class="underline text-purple-500">Papers</a>
-        <a href="#" class="hover:text-purple-500 transition-colors">Courses</a>
-        <a href="#" class="hover:text-purple-500 transition-colors">Design</a>
-        <a href="#" class="hover:text-purple-500 transition-colors">Tags</a>
-        <a href="#" class="hover:text-purple-500 transition-colors">Archive</a>
+      <div id="navigation-links" class="flex gap-6 text-gray-600">
+        <!-- Navigation links will be dynamically inserted here -->
       </div>
     </div>
   </nav>
@@ -67,8 +63,25 @@
     Loading...
   </div>
 
+  <script src="../js/config.js"></script>
   <script>
+    // Function to generate navigation links
+    function renderNavigationLinks() {
+      const container = document.getElementById('navigation-links');
+      const currentPage = window.location.pathname.split('/').pop();
+
+      tags.forEach(tag => {
+        const link = document.createElement('a');
+        const href = `../${tag.toLowerCase()}.html`;
+        link.href = href;
+        link.textContent = tag;
+        link.className = 'hover:text-purple-500 transition-colors';
+        container.appendChild(link);
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
+      renderNavigationLinks();
       const contentDiv = document.getElementById("content");
 
       // Get the query parameters from the URL
