@@ -1,150 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+            }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif;
-    }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+            .animate-fade-in {
+                opacity: 0;
+                animation: fadeInUp 0.6s ease-out forwards;
+            }
 
-    .animate-fade-in {
-      opacity: 0;
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
+            .delay-100 {
+                animation-delay: 0.1s;
+            }
+            .delay-200 {
+                animation-delay: 0.2s;
+            }
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+            .delay-400 {
+                animation-delay: 0.4s;
+            }
 
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
-    .delay-400 { animation-delay: 0.4s; }
+            .social-link {
+                transition: transform 0.2s ease;
+            }
+            .social-link:hover {
+                transform: translateY(-2px);
+            }
 
-    .social-link {
-      transition: transform 0.2s ease;
-    }
-    .social-link:hover {
-      transform: translateY(-2px);
-    }
+            .nav-tag {
+                transition: all 0.2s ease;
+            }
+            .nav-tag:hover {
+                transform: scale(1.05);
+            }
+        </style>
+    </head>
 
-    .nav-tag {
-      transition: all 0.2s ease;
-    }
-    .nav-tag:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</head>
+    <body
+        class="bg-white min-h-screen md:flex md:items-center md:justify-center"
+    >
+        <main
+            class="container mx-auto px-4 flex flex-col items-center text-center max-w-3xl py-8 md:py-0"
+        >
+            <div
+                class="relative w-36 h-36 md:w-40 md:h-40 mb-4 animate-fade-in"
+            >
+                <img
+                    id="profile-img"
+                    alt="Profile picture"
+                    class="rounded-full object-cover w-full h-full"
+                />
+            </div>
 
-<body class="bg-white min-h-screen md:flex md:items-center md:justify-center">
-  <main class="container mx-auto px-4 flex flex-col items-center text-center max-w-3xl py-8 md:py-0">
-    <div class="relative w-36 h-36 md:w-40 md:h-40 mb-4 animate-fade-in">
-      <img id="profile-img" alt="Profile picture" class="rounded-full object-cover w-full h-full" />
-    </div>
+            <h1
+                id="name"
+                class="text-3xl md:text-4xl font-bold mb-4 animate-fade-in delay-100"
+            ></h1>
 
-    <h1 id="name" class="text-3xl md:text-4xl font-bold mb-4 animate-fade-in delay-100"></h1>
+            <p
+                id="description"
+                class="text-base md:text-lg text-gray-600 mb-6 max-w-2xl animate-fade-in delay-200"
+            ></p>
 
-    <p id="description" class="text-base md:text-lg text-gray-600 mb-6 max-w-2xl animate-fade-in delay-200"></p>
+            <!-- Social Links -->
+            <div
+                id="social-links"
+                class="flex flex-wrap justify-center gap-4 mb-8 animate-fade-in delay-300"
+            >
+                <!-- Social links will be dynamically inserted here -->
+            </div>
 
-    <!-- Social Links -->
-    <div id="social-links" class="flex flex-wrap justify-center gap-4 mb-8 animate-fade-in delay-300">
-      <!-- Social links will be dynamically inserted here -->
-    </div>
+            <!-- Navigation Tags -->
+            <div
+                id="navigation-tags"
+                class="flex flex-wrap justify-center gap-2 animate-fade-in delay-400"
+            >
+                <!-- Navigation tags will be dynamically inserted here -->
+            </div>
+        </main>
+        <script src="js/about.js"></script>
+        <script src="js/config.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Validate configuration data
+                if (!about || typeof about !== "object") {
+                    console.error("Missing or invalid 'about' configuration.");
+                    return;
+                }
+                if (!Array.isArray(socials)) {
+                    console.error(
+                        "Missing or invalid 'socials' configuration.",
+                    );
+                    return;
+                }
+                if (!Array.isArray(tags)) {
+                    console.error("Missing or invalid 'tags' configuration.");
+                    return;
+                }
 
-    <!-- Navigation Tags -->
-    <div id="navigation-tags" class="flex flex-wrap justify-center gap-2 animate-fade-in delay-400">
-      <!-- Navigation tags will be dynamically inserted here -->
-    </div>
-  </main>
-  <script src="js/about.js"></script>
-  <script src="js/config.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Validate configuration data
-      if (!about || typeof about !== "object") {
-        console.error("Missing or invalid 'about' configuration.");
-        return;
-      }
-      if (!Array.isArray(socials)) {
-        console.error("Missing or invalid 'socials' configuration.");
-        return;
-      }
-      if (!Array.isArray(tags)) {
-        console.error("Missing or invalid 'tags' configuration.");
-        return;
-      }
+                // Set profile image
+                const profileImg = document.getElementById("profile-img");
+                if (about.image) {
+                    profileImg.src = about.image;
+                    profileImg.alt = `Profile picture of ${about.name}`;
+                } else {
+                    console.warn("Profile image is missing in 'about'.");
+                    profileImg.alt = "Default profile picture";
+                }
 
-      // Set profile image
-      const profileImg = document.getElementById("profile-img");
-      if (about.image) {
-        profileImg.src = about.image;
-        profileImg.alt = `Profile picture of ${about.name}`;
-      } else {
-        console.warn("Profile image is missing in 'about'.");
-        profileImg.alt = "Default profile picture";
-      }
+                // Set document title
+                document.title = about.name || "About Me";
 
-      // Set document title
-      document.title = about.name || "About Me";
+                // Set name
+                const nameElement = document.getElementById("name");
+                const [firstName, ...lastNameParts] = (
+                    about.name || "Unknown Name"
+                ).split(" ");
+                nameElement.innerHTML = `<span class="font-medium">${firstName} ${lastNameParts.join(" ")}</span>`;
 
-      // Set name
-      const nameElement = document.getElementById("name");
-      const [firstName, ...lastNameParts] = (about.name || "Unknown Name").split(" ");
-      nameElement.innerHTML = `<span class="font-bold">${firstName}</span> ${lastNameParts.join(" ")}`;
+                // Set description
+                const descriptionElement =
+                    document.getElementById("description");
+                descriptionElement.textContent =
+                    about.description || "No description provided.";
 
-
-      // Set description
-      const descriptionElement = document.getElementById("description");
-      descriptionElement.textContent =
-        about.description || "No description provided.";
-
-      // Set social links
-      const socialNavigationContainer = document.getElementById("social-links");
-      socials.forEach((link) => {
-        if (about[link.key]) {
-          const a = document.createElement("a");
-          a.href = about[link.key];
-          a.className = "text-gray-600 hover:text-black transition-colors social-link";
-          a.target = "_blank";
-          a.rel = "noopener noreferrer"; // Security best practice
-          a.innerHTML = `
+                // Set social links
+                const socialNavigationContainer =
+                    document.getElementById("social-links");
+                socials.forEach((link) => {
+                    if (about[link.key]) {
+                        const a = document.createElement("a");
+                        a.href = about[link.key];
+                        a.className =
+                            "text-gray-600 hover:text-black transition-colors social-link";
+                        a.target = "_blank";
+                        a.rel = "noopener noreferrer"; // Security best practice
+                        a.innerHTML = `
             <i data-lucide="${link.icon}" class="w-6 h-6"></i>
             <span class="sr-only">${link.label}</span>
           `;
-          socialNavigationContainer.appendChild(a);
-        }
-      });
+                        socialNavigationContainer.appendChild(a);
+                    }
+                });
 
-      // Set navigation tags
-      const navigationTagsContainer =
-        document.getElementById("navigation-tags");
-      tags.forEach((tag) => {
-        const a = document.createElement("a");
-        a.href = `${tag.toLowerCase()}.html`;
-        a.className =
-          "inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors nav-tag";
-        a.textContent = tag;
-        navigationTagsContainer.appendChild(a);
-      });
+                // Set navigation tags
+                const navigationTagsContainer =
+                    document.getElementById("navigation-tags");
+                tags.forEach((tag) => {
+                    const a = document.createElement("a");
+                    a.href = `${tag.toLowerCase()}.html`;
+                    a.className =
+                        "inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors nav-tag";
+                    a.textContent = tag;
+                    navigationTagsContainer.appendChild(a);
+                });
 
-      // Initialize Lucide icons
-      lucide.createIcons();
-    });
-  </script>
-</body>
-
+                // Initialize Lucide icons
+                lucide.createIcons();
+            });
+        </script>
+    </body>
 </html>
