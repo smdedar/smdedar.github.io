@@ -1,6 +1,6 @@
 ## Simple portfolio
 
-<img src="https://private-user-images.githubusercontent.com/60034035/393283056-cb0ca01d-d5bf-4978-b0a1-d0714bfb5e85.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzM0OTUyMDQsIm5iZiI6MTczMzQ5NDkwNCwicGF0aCI6Ii82MDAzNDAzNS8zOTMyODMwNTYtY2IwY2EwMWQtZDViZi00OTc4LWIwYTEtZDA3MTRiZmI1ZTg1LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMDYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjA2VDE0MjE0NFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI2NTJiM2RlNTMyNmMzN2UxNjI5OTk4NzJiZmY1ZTE4NjJjNmY3YWNiNDczZjE4NWJhZjJmMmNiNWQ4OGQwNDUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.0m1S7xXPyF3UXjJMUd6d3IYFgaGp-MAjFX0YDQOpG8c">
+<img src="https://dl.dropboxusercontent.com/scl/fi/02lgqa3sxpg7vx4edopmd/Screenshot_12-5-2025_16448_techsini.com.png?rlkey=frs61nau06450rgok1mv9hzda">
 
 
 ### Update Info
@@ -17,7 +17,6 @@ To update about go to `js/about.js` and update the info
 }
 ```
 
-
 ## Update Config
 To update config go to `js/config.js` and update the info
 ```
@@ -30,6 +29,31 @@ socials = [
 tags = []  ## Here add the tags
 ```
 
-## Papers & Projects
-Comming soon
+## Papers
+To update papers go to `js/papers.js` and update the info
+```
+papers = [
+    {
+        title: "",
+        authors: "",
+        journal: "",
+        year: "",
+        link: "",
+    },
+    # Add more papers
+]
+```
 
+## Projects
+To update projects go to `js/projects.js` and update the info
+```
+projects = [
+    {
+        title: "",
+        description: "",
+        image: "",
+        link: "",
+    },
+    # Add more projects
+]
+```
