@@ -73,7 +73,7 @@
         // Handle opening paper details
         function openPaperDetails(url) {
             if (url) {
-                window.location.href = url;
+                window.open(url, '_blank');
             } else {
                 console.error('Paper URL is not provided.');
             }
