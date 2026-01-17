@@ -46,7 +46,13 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-[#FAFAFA]">
+    <style>
+        ::selection {
+            background-color: #1A1A1A;
+            color: #00FF00;
+        }
+    </style>
     <!-- Navigation -->
     <nav class="border-b px-4 py-4 bg-white">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -75,25 +81,25 @@
         function createProjectCard(project) {
             return `
                 <article 
-                    class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer" 
+                    class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group" 
                     onclick="openProjectDetails('${project.url}')"
                     role="button"
                     tabindex="0"
                     aria-label="View details of ${project.title}"
                     onkeypress="handleKeyPress(event, '${project.url}')"
                 >
-                    <h2 class="text-xl font-medium mb-4">${project.title}</h2>
-                    <p class="text-gray-600 mb-4">${project.description}</p>
-                    <div class="flex justify-between items-center">
-                        <div class="text-gray-500">
+                    <h2 class="text-xl font-medium mb-4 group-hover:text-purple-600 transition-colors">${project.title}</h2>
+                    <p class="text-gray-600 mb-4 font-light leading-relaxed">${project.description}</p>
+                    <div class="flex justify-between items-center border-t pt-4 mt-4 border-gray-100">
+                        <div class="text-gray-500 text-xs tracking-wider uppercase">
                             ${project.date} &middot; ${project.authors}
                         </div>
-                        <div class="flex gap-4">
-                            <a href="${project.url}" class="text-purple-500 hover:text-purple-700 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Live Preview">
-                                🔗 Live Preview
+                        <div class="flex gap-4 text-xs font-mono">
+                            <a href="${project.url}" class="text-gray-500 hover:text-purple-600 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Live Preview">
+                                [LIVE]
                             </a>
-                            <a href="${project.github || '#'}" class="text-purple-500 hover:text-purple-700 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
-                                📁 GitHub
+                            <a href="${project.github || '#'}" class="text-gray-500 hover:text-purple-600 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
+                                [CODE]
                             </a>
                         </div>
                     </div>

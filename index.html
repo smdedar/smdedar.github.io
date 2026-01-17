@@ -15,7 +15,16 @@
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background-color: #F5F5F5;
+            background-color: #FAFAFA;
+            /* Cleaner off-white */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background-color: #1A1A1A;
+            color: #00FF00;
+            /* Tech Green highlight */
         }
 
         h1,
@@ -90,8 +99,11 @@
 
 <body class="min-h-screen md:flex md:items-center md:justify-center">
     <main class="container mx-auto px-4 flex flex-col items-center text-center max-w-3xl py-8 md:py-0">
-        <div class="relative w-36 h-36 md:w-40 md:h-40 mb-4 animate-fade-in">
-            <img id="profile-img" alt="Profile picture" class="rounded-full object-cover w-full h-full" />
+        <div class="relative w-36 h-36 md:w-40 md:h-40 mb-4 animate-fade-in group">
+            <div
+                class="absolute inset-0 rounded-full border-2 border-gray-200 group-hover:border-gray-900 transition-colors duration-300">
+            </div>
+            <img id="profile-img" alt="Profile picture" class="rounded-full object-cover w-full h-full p-1" />
         </div>
 
         <h1 id="name" class="text-3xl md:text-4xl font-bold mb-4 animate-fade-in delay-100"></h1>
