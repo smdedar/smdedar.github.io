@@ -16,6 +16,9 @@
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: #FAFAFA;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
             /* Cleaner off-white */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -35,6 +38,8 @@
         h6 {
             font-family: 'Chakra Petch', sans-serif;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            /* Cinematic spacing */
         }
 
         #description {
@@ -89,10 +94,32 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .nav-tag:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 0 #1A1A1A;
+            /* Hard tech shadow */
+        }
+
+        .nav-tag::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #1A1A1A;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-tag:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
     </style>
 </head>

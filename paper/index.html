@@ -61,15 +61,132 @@
       border-radius: 5px;
       text-align: center;
     }
-  </style>
-  ::selection {
-  background-color: #1A1A1A;
-  color: #00FF00;
-  }
+
+    /* HUD Nav Styles */
+    #navigation-links a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    #navigation-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #a855f7;
+      /* Purple-500 */
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    #navigation-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Markdown Content Styling (Tailwind Reset Override) */
+    #content h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 0.5rem;
+    }
+
+    #content h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      margin-top: 1.5rem;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 0.3rem;
+    }
+
+    #content h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    #content h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    #content p {
+      margin-bottom: 1rem;
+    }
+
+    #content ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #content ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #content li {
+      margin-bottom: 0.25rem;
+    }
+
+    #content blockquote {
+      border-left: 4px solid #e5e7eb;
+      padding-left: 1rem;
+      color: #4b5563;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    #content a {
+      color: #a855f7;
+      text-decoration: none;
+    }
+
+    #content a:hover {
+      text-decoration: underline;
+    }
+
+    #content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    #content code {
+      background-color: #f3f4f6;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 85%;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    #content pre code {
+      background-color: transparent;
+      padding: 0;
+      font-size: 100%;
+    }
+
+    ::selection {
+      background-color: #1A1A1A;
+      color: #00FF00;
+    }
   </style>
 </head>
 
-<body class="bg-[#FAFAFA]">
+<body class="bg-[#FAFAFA]"
+  style="background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px); background-size: 32px 32px;">
 
   <!-- Navigation -->
   <nav class="border-b px-4 py-4 bg-white">
@@ -113,8 +230,58 @@
       // Get the query parameters from the URL
       const urlParams = new URLSearchParams(window.location.search);
       const contentParam = urlParams.get("content");
+      const repoParam = urlParams.get("repo");
 
-      if (contentParam) {
+      function fetchAndRender(url) {
+        contentDiv.innerHTML = '<div class="text-center p-4">Loading from GitHub...</div>';
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+          })
+          .then((markdown) => {
+            const htmlContent = marked.parse(markdown);
+            contentDiv.innerHTML = htmlContent;
+          })
+          .catch((error) => {
+            console.error("Error fetching from main, trying master...", error);
+            // Fallback to master if main fails
+            if (url.includes("/main/")) {
+              fetchAndRender(url.replace("/main/", "/master/"));
+            } else {
+              contentDiv.innerHTML = `
+                <div class="error-message">
+                  Unable to load README from GitHub. Please check the repository URL.
+                </div>
+              `;
+            }
+          });
+      }
+
+      if (repoParam) {
+        // Clean the repo param just in case
+        const cleanRepo = repoParam.replace('https://github.com/', '').replace(/\/$/, '');
+        const rawUrl = `https://raw.githubusercontent.com/${cleanRepo}/main/README.md`;
+
+        // Update Page Title
+        document.title = `${cleanRepo.split('/')[1]} - Documentation`;
+
+        // Add View on GitHub link
+        const navContainer = document.querySelector('.max-w-6xl');
+        if (navContainer) {
+          const githubLink = document.createElement('a');
+          githubLink.href = `https://github.com/${cleanRepo}`;
+          githubLink.target = "_blank";
+          githubLink.className = "text-sm text-purple-600 hover:underline ml-4 font-mono";
+          githubLink.innerHTML = "[VIEW ON GITHUB]";
+          navContainer.appendChild(githubLink);
+        }
+
+        fetchAndRender(rawUrl);
+
+      } else if (contentParam) {
         // Construct the Markdown file name
         const markdownFileName = `${contentParam}.md`;
 
@@ -146,7 +313,7 @@
         // Display a message if no content parameter is provided
         contentDiv.innerHTML = `
         <div class="error-message">
-          No content specified in the URL. Please provide a valid file name.
+          No content specified. Please provide a valid file name or GitHub repository.
         </div>
       `;
       }
