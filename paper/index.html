@@ -213,6 +213,21 @@
       const container = document.getElementById('navigation-links');
       const currentPage = window.location.pathname.split('/').pop();
 
+      // Implement Return Link
+      const returnLink = document.createElement('a');
+      returnLink.className = "text-sm text-gray-500 hover:text-purple-600 transition-colors font-mono mr-auto flex items-center";
+      returnLink.innerHTML = "<span class='mr-1'>&lt;</span> RETURN";
+
+      // Determine referral source
+      if (document.referrer && document.referrer.includes('projects.html')) {
+        returnLink.href = "../projects.html";
+      } else if (document.referrer && document.referrer.includes('papers.html')) {
+        returnLink.href = "../papers.html";
+      } else {
+        returnLink.href = "/";
+      }
+      container.appendChild(returnLink);
+
       tags.forEach(tag => {
         const link = document.createElement('a');
         const href = `../${tag.toLowerCase()}.html`;

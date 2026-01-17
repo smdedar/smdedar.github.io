@@ -92,11 +92,25 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-5xl mx-auto py-8 px-4">
-        <div id="papers-container" class="space-y-6">
-            <!-- Cards will be dynamically inserted here -->
+    <div class="mb-12 max-w-xl">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-gray-900">Academic Papers</h1>
+        <p class="text-xl text-gray-600 font-light leading-relaxed">
+            Research papers and publications I've authored.
+        </p>
+
+        <!-- Command Line Search -->
+        <div class="mt-8 relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-400 font-mono text-lg">></span>
+            </div>
+            <input type="text" id="search-input"
+                class="block w-full pl-8 pr-3 py-2 border-b-2 border-gray-200 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-600 focus:ring-0 sm:text-sm font-mono transition-colors"
+                placeholder="grep 'search papers'..." autocomplete="off">
+            <div class="absolute inset-y-0 right-0 flex items-center">
+                <span class="animate-pulse text-purple-600 font-bold">_</span>
+            </div>
         </div>
-    </main>
+    </div>
 
     <script src="js/papers.js"></script>
     <script src="js/config.js"></script>
@@ -122,16 +136,34 @@
         }
 
         // Render paper cards
-        function renderPapers() {
+        function renderPapers(papersToRender = papers) {
             const container = document.getElementById('papers-container');
-            if (!papers || papers.length === 0) {
+
+            // Clear container first
+            container.innerHTML = '';
+
+            if (!papersToRender || papersToRender.length === 0) {
                 container.innerHTML = `
-                    <p class="text-gray-500 text-center">No papers available at the moment.</p>
+                    <div class="col-span-full py-12 text-center">
+                        <p class="text-gray-400 font-mono text-lg">No matches found for query.</p>
+                        <button onclick="document.getElementById('search-input').value = ''; renderPapers();" class="mt-4 text-purple-600 hover:text-purple-700 underline font-mono text-sm">Clear Search</button>
+                    </div>
                 `;
                 return;
             }
-            container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
+            container.innerHTML = papersToRender.map(paper => createPaperCard(paper)).join('');
         }
+
+        // Search Logic
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const filtered = papers.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                p.description.toLowerCase().includes(query) ||
+                p.authors.toLowerCase().includes(query)
+            );
+            renderPapers(filtered);
+        });
 
         // Handle opening paper details
         function openPaperDetails(url) {

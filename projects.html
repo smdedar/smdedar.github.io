@@ -149,16 +149,34 @@
         }
 
         // Render project cards
-        function renderProjects() {
+        function renderProjects(projectsToRender = projects) {
             const container = document.getElementById('projects-container');
-            if (!projects || projects.length === 0) {
+
+            // Clear container first
+            container.innerHTML = '';
+
+            if (!projectsToRender || projectsToRender.length === 0) {
                 container.innerHTML = `
-                    <p class="text-gray-500 text-center">No projects available at the moment.</p>
+                    <div class="col-span-full py-12 text-center">
+                        <p class="text-gray-400 font-mono text-lg">No matches found for query.</p>
+                        <button onclick="document.getElementById('search-input').value = ''; renderProjects();" class="mt-4 text-purple-600 hover:text-purple-700 underline font-mono text-sm">Clear Search</button>
+                    </div>
                 `;
                 return;
             }
-            container.innerHTML = projects.map(project => createProjectCard(project)).join('');
+            container.innerHTML = projectsToRender.map(project => createProjectCard(project)).join('');
         }
+
+        // Search Logic
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const filtered = projects.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                p.description.toLowerCase().includes(query) ||
+                p.authors.toLowerCase().includes(query)
+            );
+            renderProjects(filtered);
+        });
 
         // Handle opening project details
         function openProjectDetails(url) {
