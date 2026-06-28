@@ -4,6 +4,7 @@ const socials = [
   { key: "linkedin", icon: "linkedin", label: "LinkedIn" },
   { key: "github", icon: "github", label: "GitHub" },
   { key: "google_scholar", icon: "book-open", label: "Google Scholar" },
+  { key: "credly", icon: "award", label: "Credly" },
 ];
 
 const tags = ["Papers", "Projects",];

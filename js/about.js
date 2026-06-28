@@ -7,4 +7,5 @@ const about = {
     linkedin: "https://www.linkedin.com/in/smdedar/",
     github: "https://github.com/smdedar",
     google_scholar: "https://scholar.google.com/citations?user=G7OR-60AAAAJ&hl=en",
+    credly: "https://www.credly.com/users/smdedar",
 };
