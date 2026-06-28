@@ -18,7 +18,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://smdedar.github.io/">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Pinned to 0.288.0: last release that still ships brand icons (github, linkedin) -->
+    <script src="https://unpkg.com/lucide@0.288.0"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -149,6 +150,11 @@
 
         <p id="description" class="text-base md:text-lg text-gray-600 mb-6 max-w-2xl animate-fade-in delay-200"></p>
 
+        <!-- Navigation Tags (primary call-to-action) -->
+        <div id="navigation-tags" class="flex flex-wrap justify-center gap-2 mb-8 animate-fade-in delay-300">
+            <!-- Navigation tags will be dynamically inserted here -->
+        </div>
+
         <!-- Social Links -->
         <div id="social-links" class="flex flex-wrap justify-center gap-4 mb-8 animate-fade-in delay-300">
             <!-- Social links will be dynamically inserted here -->
@@ -156,15 +162,8 @@
 
         <!-- Contribution Graph -->
         <div id="contribution-graph"
-            class="w-full mb-8 animate-fade-in delay-300 hidden md:flex flex-col items-center justify-center">
+            class="w-full animate-fade-in delay-400 hidden md:flex flex-col items-center justify-center">
             <!-- Graph will be injected here -->
-        </div>
-
-
-
-        <!-- Navigation Tags -->
-        <div id="navigation-tags" class="flex flex-wrap justify-center gap-2 animate-fade-in delay-400">
-            <!-- Navigation tags will be dynamically inserted here -->
         </div>
     </main>
     <script src="js/about.js"></script>
