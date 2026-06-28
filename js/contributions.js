@@ -97,6 +97,25 @@ function renderContributionGraph(contributionMap) {
     `;
     container.appendChild(style);
 
+    // 0. Hero Count-Up: Total contributions over the last 12 months
+    // The contributionMap holds exactly one year of data (jogruber `y=last`),
+    // so the total is simply the sum of every day's count.
+    let totalContributions = 0;
+    contributionMap.forEach(count => {
+        totalContributions += count;
+    });
+
+    const hero = document.createElement('div');
+    hero.className = 'flex items-baseline justify-center gap-1.5 mb-3 select-none text-[11px] uppercase tracking-[0.2em] font-mono text-gray-500 font-bold';
+    hero.innerHTML = `
+        <span id="contrib-total" class="tabular-nums text-gray-900">0</span>
+        <span>Commits &middot; Last 12 Months</span>
+    `;
+    container.appendChild(hero);
+
+    // Animate the number from 0 -> total with an ease-out curve
+    animateCountUp(hero.querySelector('#contrib-total'), totalContributions);
+
     const grid = document.createElement('div');
     grid.className = 'flex flex-col gap-1';
 
@@ -227,6 +246,31 @@ function renderContributionGraph(contributionMap) {
     statsContainer.appendChild(createStat('M.S.', `${stats.maxStreak}d`));
 
     container.appendChild(statsContainer);
+}
+
+function animateCountUp(el, target, duration = 1400) {
+    if (!el) return;
+    if (target <= 0) {
+        el.textContent = '0';
+        return;
+    }
+
+    const start = performance.now();
+    // Ease-out cubic for a snappy finish
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    const tick = now => {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.floor(easeOut(progress) * target);
+        el.textContent = value.toLocaleString();
+        if (progress < 1) {
+            requestAnimationFrame(tick);
+        } else {
+            el.textContent = target.toLocaleString();
+        }
+    };
+
+    requestAnimationFrame(tick);
 }
 
 function calculateStats(contributionMap) {
